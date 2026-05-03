@@ -8,7 +8,7 @@ from asteroidfield import AsteroidField
 from logger import log_event
 import sys
 from shot import Shot
-
+# Main game loop
 def main():
     print(f"Starting Asteroids with pygame version: {pygame.version.ver}")
     print(f"Screen width: {SCREEN_WIDTH}")
@@ -41,6 +41,13 @@ def main():
                 log_event("player_hit")
                 print("Game over!")
                 sys.exit()
+        for asteroid in asteroids:
+            for shot in shots:
+                if shot.collides_with(asteroid):
+                    log_event("asteroid_shot")      
+                    asteroid.kill()
+                    shot.kill()
+        
         for obj in drawable:
             obj.draw(screen)
         pygame.display.flip()
